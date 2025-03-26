@@ -7,7 +7,7 @@
 
 const char *startFilePath="/music/";
 const char* ext="mp3";
-AudioSourceSDFAT source(startFilePath, ext, 15);
+AudioSourceSD source(startFilePath, ext, 15);
 A2DPStream out;
 MP3DecoderHelix decoder;
 AudioPlayer player(source, out, decoder);
