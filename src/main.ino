@@ -3,7 +3,7 @@
 #include "AudioTools/AudioLibs/A2DPStream.h"
 #include "AudioTools/AudioLibs/AudioSourceSD.h"
 //#include "AudioTools/Disk/LegacyAudioSourceSDFAT.h"
-#include "AudioTools/AudioCodecs/CodecMP3Helix.h"
+#include "AudioTools/AudioCodecs/CodecHelix.h"
 
 const char *startFilePath="/music/";
 const char* ext="mp3";
