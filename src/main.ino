@@ -1,28 +1,33 @@
+#define HELIX_LOGGING_ACTIVE false
 #include "AudioTools.h"
-#include "AudioTools/AudioCodecs/CodecFLAC.h"
-#include "AudioTools/AudioLibs/AudioBoardStream.h"
+#include "AudioTools/AudioLibs/A2DPStream.h"
+#include "AudioTools/AudioLibs/AudioSourceSDFAT.h"
+#include "AudioTools/AudioCodecs/CodecMP3Helix.h"
 
-AudioInfo info(44100, 2, 16);
-SineWaveGenerator<int16_t> sineWave( 32000);  // subclass of SoundGenerator with max amplitude of 32000
-GeneratedSoundStream<int16_t> sound( sineWave); // Stream generated from sine wave
-HexDumpOutput out(Serial);
-EncodedAudioStream encoder(&out, new FLACEncoder()); // encode and write
-StreamCopy copier(encoder, sound);     
+const char *startFilePath="/music/";
+const char* ext="mp3";
+AudioSourceSDFAT source(startFilePath, ext, 15);
+A2DPStream out;
+MP3DecoderHelix decoder;
+AudioPlayer player(source, out, decoder);
 
 void setup() {
   Serial.begin(115200);
   AudioToolsLogger.begin(Serial, AudioToolsLogLevel::Warning);
+  // setup player
+  // Setting up SPI if necessary with the right SD pins by calling 
+  SPI.begin(14, 12, 13, 15);
+  player.setVolume(0.8);
+  player.begin();
 
-  // Setup sine wave
-  sineWave.begin(info, N_B4);
-
-  // start encoder
-  encoder.begin(info);
-
-  Serial.println("Test started...");
+  // setup output - We send the test signal via A2DP - so we conect to a Bluetooth Speaker
+  auto cfg = out.defaultConfig(TX_MODE);
+  cfg.silence_on_nodata = true; // prevent disconnect when there is no audio data
+  cfg.name = "CLIP 5";  // set the device here. Otherwise the first available device is used for output
+  //cfg.auto_reconnect = true;  // if this is use we just quickly connect to the last device ignoring cfg.name
+  out.begin(cfg);
 }
 
-
-void loop() { 
-  copier.copy();
+void loop() {
+  player.copy();
 }
