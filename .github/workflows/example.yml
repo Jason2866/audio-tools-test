@@ -31,6 +31,15 @@ jobs:
         run: |
           powershell -Command "New-Item -ItemType SymbolicLink -Path C:\short -Target $PWD"
           cd C:\short
+        env:
+          PLATFORMIO_CORE_DIR: C:\short
+          PLATFORMIO_PACKAGES_DIR: C:\short\pack
+          PLATFORMIO_PLATFORMS_DIR: C:\short\plat
       - name: Build example
         run: |
           pio run
+        if: "matrix.os == 'windows-2022'"
+        env:
+          PLATFORMIO_CORE_DIR: C:\short
+          PLATFORMIO_PACKAGES_DIR: C:\short\pack
+          PLATFORMIO_PLATFORMS_DIR: C:\short\plat
