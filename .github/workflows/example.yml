@@ -1,18 +1,18 @@
 name: Examples
 
 on:
-  workflow_dispatch:      # Manually start a workflow
+  workflow_dispatch:
   push:
     paths-ignore:
-    - '.github/**'        # Ignore changes towards the .github directory
-    - '**.md'             # Do no build if *.md files changes
+      - '.github/**'
+      - '**.md'
 
 jobs:
   build:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-14]
+        os: [windows-2022]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -24,6 +24,21 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -U https://github.com/Jason2866/platformio-core/archive/refs/tags/v6.1.18.zip
+        shell: pwsh
+      - name: Shorten path
+        run: |
+          subst P: $PWD
+          cd P:\
+        env:
+          PLATFORMIO_CORE_DIR: P:\
+          PLATFORMIO_PACKAGES_DIR: P:\
+          PLATFORMIO_PLATFORMS_DIR: P:\
+        shell: pwsh
       - name: Build example
         run: |
           pio run
+        env:
+          PLATFORMIO_CORE_DIR: P:\
+          PLATFORMIO_PACKAGES_DIR: P:\
+          PLATFORMIO_PLATFORMS_DIR: P:\
+        shell: pwsh
