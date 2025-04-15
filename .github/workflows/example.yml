@@ -28,4 +28,4 @@ jobs:
           pip install -U https://github.com/Jason2866/platformio-core/archive/refs/tags/v6.1.17.zip
       - name: Build example
         run: |
-          pio run --force-response-files
+          pio run
