@@ -29,7 +29,7 @@ jobs:
       - name: Shorten path on Windows
         if: matrix.os == 'windows-2022'
         run: |
-          mklink /D C:\short %CD%
+          powershell -Command "New-Item -ItemType SymbolicLink -Path C:\short -Target $PWD"
           cd C:\short
       - name: Build example
         run: |
