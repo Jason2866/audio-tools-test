@@ -1,11 +1,11 @@
 name: Examples
 
 on:
-  workflow_dispatch:      # Manually start a workflow
+  workflow_dispatch:
   push:
     paths-ignore:
-    - '.github/**'        # Ignore changes towards the .github directory
-    - '**.md'             # Do no build if *.md files changes
+      - '.github/**'
+      - '**.md'
 
 jobs:
   build:
@@ -26,6 +26,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install wheel
           pip install -U https://github.com/Jason2866/platformio-core/archive/refs/tags/v6.1.17.zip
+      - name: Shorten path on Windows
+        if: matrix.os == 'windows-2022'
+        run: |
+          mklink /D C:\short %CD%
+          cd C:\short
       - name: Build example
         run: |
           pio run
