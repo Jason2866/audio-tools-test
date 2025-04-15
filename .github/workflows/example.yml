@@ -33,13 +33,13 @@ jobs:
           cd P:\
         env:
           PLATFORMIO_CORE_DIR: P:\
-          PLATFORMIO_PACKAGES_DIR: P:\pck
-          PLATFORMIO_PLATFORMS_DIR: P:\plt
+          PLATFORMIO_PACKAGES_DIR: P:\
+          PLATFORMIO_PLATFORMS_DIR: P:\
       - name: Build example
         run: |
           pio run
         if: "matrix.os == 'windows-2022'"
         env:
           PLATFORMIO_CORE_DIR: P:\
-          PLATFORMIO_PACKAGES_DIR: P:\pck
-          PLATFORMIO_PLATFORMS_DIR: P:\plt
+          PLATFORMIO_PACKAGES_DIR: P:\
+          PLATFORMIO_PLATFORMS_DIR: P:\
