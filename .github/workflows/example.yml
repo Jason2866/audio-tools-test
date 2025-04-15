@@ -34,7 +34,7 @@ jobs:
         env:
           PLATFORMIO_CORE_DIR: P:\
           PLATFORMIO_PACKAGES_DIR: P:\pck
-          PLATFORMIO_PLATFORMS_DIR: p:\plt
+          PLATFORMIO_PLATFORMS_DIR: P:\plt
       - name: Build example
         run: |
           pio run
