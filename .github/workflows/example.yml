@@ -29,7 +29,7 @@ jobs:
       - name: Shorten path on Windows
         if: matrix.os == 'windows-2022'
         run: |
-          powershell -Command "New-Item -ItemType SymbolicLink -Path P:\ -Target $PWD"
+          subst P: $PWD
           cd P:\
         env:
           PLATFORMIO_CORE_DIR: P:\
