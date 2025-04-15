@@ -36,6 +36,7 @@ jobs:
         shell: pwsh
       - name: Build example
         run: |
+          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v "LongPathsEnabled" /t REG_DWORD /d 1 /f
           pio run
         env:
           PLATFORMIO_CORE_DIR: P:\
